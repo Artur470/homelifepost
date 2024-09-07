@@ -18,9 +18,11 @@ import ssl
 from decouple import config
 
 import certifi
-import os
+
 
 import dj_database_url
+import os
+
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -122,8 +124,12 @@ DATABASES = {
 }
 
 
-dj_database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(dj_database_url)
+
+
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
